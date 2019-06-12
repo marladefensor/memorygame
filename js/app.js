@@ -60,10 +60,20 @@ let matched = []; // array to hold all the matched items
 
 document.addEventListener('click', (event) => {
   event.preventDefault();
-  let card = event.target;
-  card.classList.add('open','show');
-  matchList(card);
-  moveUp();
+  if (event.target.classList.value == 'card') {
+    let card = event.target;
+    // console.log(card.classList.value);
+    card.classList.add('open','show');
+    matchList(card);
+    moveUp();
+  }
+})
+
+let restart = document.getElementById('restart');
+
+restart.addEventListener('click', (event) => {
+  event.preventDefault();
+  if ()
 })
 
 function matchList(card) {
@@ -98,5 +108,3 @@ function moveUp() {
 function win(){
   alert(`You win!!\nYour score is: ${document.getElementById('moves').innerHTML}`);
 }
-
-let restart = 
