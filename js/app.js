@@ -4,12 +4,12 @@
 const cards = ['fa-diamond','fa-diamond','fa-paper-plane-o','fa-paper-plane-o','fa-anchor','fa-anchor',
               'fa-bolt','fa-bolt','fa-cube','fa-cube','fa-leaf','fa-leaf','fa-bicycle','fa-bicycle',
               'fa-bomb','fa-bomb'];
-console.log(cards.length);
-console.log(cards);
+// console.log(cards.length);
+// console.log(cards);
 
 // console.log(shuffle(cards));
 display(cards);
-console.log(document.getElementById('deck'));
+// console.log(document.getElementById('deck'));
 
 /*
  * Display the cards on the page
@@ -19,7 +19,7 @@ console.log(document.getElementById('deck'));
  */
 function display(array) {
   let items = shuffle(cards);
-  console.log(items);
+  // console.log(items);
   for (let item of items) {
     let list = document.getElementById('deck');
     let newListItem = document.createElement('li');
@@ -55,24 +55,48 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+let matches = []; //temporary array to hold possibly matched items
+let matched = []; // array to hold all the matched items
 
-let listed = document.getElementsByClassName('card');
-console.log(listed);
-let matches = [];
 document.addEventListener('click', (event) => {
   event.preventDefault();
   let card = event.target;
-  console.log(card);
   card.classList.add('open','show');
-  matches.push(card);
-  console.log(matches[0].innerHTML);
-  if(matches.length == 2) {
-    if (matches[0].innerHTML == matches[1].innerHTML) {
-      matches[0].classList.add('match');
-      matches[1].classList.add('match');
-    }
-    matches[0].classList.remove('open','show');
-    matches[1].classList.remove('open','show');
-    matches = [];
-  }
+  matchList(card);
+  moveUp();
 })
+
+function matchList(card) {
+  matches.push(card);
+  if (matches.length == 2) {
+    check(matches[0],matches[1]);
+  }
+  if (matched.length == 16) {
+    win();
+  }
+}
+
+function check(arr1,arr2) {
+  if (arr1.innerHTML == arr2.innerHTML) {
+    arr1.classList.add('match');
+    arr2.classList.add('match');
+    matched.push(arr1.innerHTML);
+    matched.push(arr2.innerHTML);
+  }
+  setTimeout(function() {arr1.classList.remove('open','show')},1000);
+  setTimeout(function() {arr2.classList.remove('open','show')},1000);
+  matches = [];
+}
+
+function moveUp() {
+  let moves = document.getElementById('moves');
+  // console.log('moves: ', moves.innerHTML);
+  moves.innerHTML = parseFloat(moves.innerHTML) + 1;
+  // console.log('after moves: ', moves.innerHTML);
+}
+
+function win(){
+  alert(`You win!!\nYour score is: ${document.getElementById('moves').innerHTML}`);
+}
+
+let restart = 
