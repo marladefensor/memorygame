@@ -1,6 +1,7 @@
 /*
  * Create a list that holds all of your cards
  */
+let timer = false;
 const cards = ['fa-diamond','fa-diamond','fa-paper-plane-o','fa-paper-plane-o','fa-anchor','fa-anchor',
               'fa-bolt','fa-bolt','fa-cube','fa-cube','fa-leaf','fa-leaf','fa-bicycle','fa-bicycle',
               'fa-bomb','fa-bomb'];
@@ -60,9 +61,13 @@ let matched = []; // array to hold all the matched items
 
 document.addEventListener('click', (event) => {
   event.preventDefault();
+  if (timer == false) {
+    setTimer();
+  }
+
   if (event.target.classList.value == 'card') {
     let card = event.target;
-    // console.log(card.classList.value);
+    console.log(card.classList.value);
     card.classList.add('open','show');
     matchList(card);
     moveUp();
@@ -73,7 +78,7 @@ let restart = document.getElementById('restart');
 
 restart.addEventListener('click', (event) => {
   event.preventDefault();
-  if ()
+  document.location.reload(true);
 })
 
 function matchList(card) {
@@ -92,10 +97,25 @@ function check(arr1,arr2) {
     arr2.classList.add('match');
     matched.push(arr1.innerHTML);
     matched.push(arr2.innerHTML);
+    arr1.classList.add('animated','rubberBand');
+    arr2.classList.add('animated','rubberBand');
+
   }
-  setTimeout(function() {arr1.classList.remove('open','show')},1000);
-  setTimeout(function() {arr2.classList.remove('open','show')},1000);
+  else{
+    setTimeout(function() {arr1.classList.remove('open','show')},1200);
+    setTimeout(function() {arr1.classList.add('animated','wobble')},500);
+    setTimeout(function() {arr1.classList.remove('animated','wobble')},1200);
+    // setTimeout(function() {arr1.classList.add('transform')},1000);
+    setTimeout(function() {arr2.classList.remove('open','show')},1200);
+    setTimeout(function() {arr2.classList.add('animated','wobble')},500);
+    setTimeout(function() {arr2.classList.remove('animated','wobble')},1200);
+    // setTimeout(function() {arr2.classList.add('transform')},1000);
+  }
   matches = [];
+}
+
+function setTimer() {
+  
 }
 
 function moveUp() {
