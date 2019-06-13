@@ -139,7 +139,7 @@ function moveUp() {
   // console.log('moves: ', moves.innerHTML);
   moves.innerHTML = parseFloat(moves.innerHTML) + 1;
   // console.log('after moves: ', moves.innerHTML);
-  if (parseFloat(moves.innerHTML) > 40) {
+  if (parseFloat(moves.innerHTML) > 30) {
     document.getElementById('third').innerHTML = '<i class="far fa-star"></i>';
   }
   else if(parseFloat(moves.innerHTML) > 60) {
@@ -154,12 +154,15 @@ function moveUp() {
 function win(){
   let final = finalTime(Math.floor(time/1000));
   let modal = document.getElementById('modalWin');
+  let first = document.getElementById('first').innerHTML;
+  let second = document.getElementById('second').innerHTML;
+  let third = document.getElementById('third').innerHTML;
   document.getElementById('modal-content').innerHTML =
-    `<p>You win!</p>
-    <p> Your star rating is: PUT HERE</p>
-    <p> Score: ${document.getElementById('moves').innerHTML}</p>
+    `<p><strong>You win!</strong></p>
+    <p> Star rating: ${first}${second}${third}</p>
+    <p> Score: ${parseFloat(document.getElementById('moves').innerHTML)+1}</p>
     <p> Time: ${final}</p>
-    <p id="tryAgain">Try Again?</p>`;
+    <button id="tryAgain">Try Again?</button>`;
 
   document.getElementById('tryAgain').addEventListener('click',  (event) => {
     event.preventDefault();
