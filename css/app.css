@@ -44,7 +44,7 @@ h1 {
     background: #EDEDED;
     padding: 32px;
     border-radius: 10px;
-    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    box-shadow: 10px 10px 0 0 rgba(46, 61, 73, 0.25);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -63,7 +63,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+    /* box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5); */
     backface-visibility: hidden;
 
 }
