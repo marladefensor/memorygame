@@ -2,7 +2,7 @@
  * Create a list that holds all of your cards
  */
 let timer = false;
-let time = 0;
+let time = 00;
 const cards = ['far fa-gem','far fa-gem','far fa-paper-plane','far fa-paper-plane','fas fa-anchor','fas fa-anchor',
               'fas fa-bolt','fas fa-bolt','fas fa-cube','fas fa-cube','fas fa-leaf','fas fa-leaf','fas fa-bicycle','fas fa-bicycle',
               'fas fa-bomb','fas fa-bomb'];
@@ -19,11 +19,22 @@ console.log(cards);
 function display(array) {
   let items = shuffle(cards);
   // console.log(items);
+  // create HTML for each of the items
+  // <div class="card">
+  //     <div class="front"></div>
+  //     <div class="back"></div>
+  // </div>
   for (let item of items) {
     let list = document.getElementById('deck');
-    let newListItem = document.createElement('li');
+    let newListItem = document.createElement('div');
     newListItem.classList.add('card');
-    newListItem.innerHTML = `<i class="${item}"></i>`;
+    let front = document.createElement('div');
+    front.classList.add('front');
+    newListItem.appendChild(front);
+    let back = document.createElement('div');
+    back.classList.add('back');
+    back.innerHTML = `<i class="${item}"></i>`;
+    newListItem.appendChild(back);
     list.appendChild(newListItem);
   }
 }
@@ -43,27 +54,16 @@ function shuffle(array) {
     return array;
 }
 
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
 let matches = []; //temporary array to hold possibly matched items
 let matched = []; // array to hold all the matched items
 
 document.addEventListener('click', (event) => {
   event.preventDefault();
   setTimer();
-  if (event.target.classList.value == 'card') {
-    let card = event.target;
+  if (event.target.parentElement.classList.value == 'card') {
+    let card = event.target.parentElement;
     console.log(card.classList.value);
-    card.classList.add('open','show');
+    card.classList.add('flip');
     matchList(card);
     moveUp();
   }
@@ -72,9 +72,8 @@ document.addEventListener('click', (event) => {
 // reloads the page if the restart icon is pressed
 let restart = document.getElementById('restart');
 
-restart.addEventListener('click', (event) => {
-  event.preventDefault();
-  document.location.reload(true);
+restart.addEventListener('click', () => {
+  window.location.reload(true);
 })
 
 // checks if the two cards selected matches, if all cards are matched, win function is called
@@ -91,23 +90,30 @@ function matchList(card) {
 // checks if the two cards selected matched, if not, cards are turned over
 function check(arr1,arr2) {
   if (arr1.innerHTML == arr2.innerHTML) {
-    arr1.classList.add('match');
-    arr2.classList.add('match');
+    // console.log(arr1);
+    // console.log(arr2.lastChild);
     matched.push(arr1.innerHTML);
     matched.push(arr2.innerHTML);
-    arr1.classList.add('animated','rubberBand');
-    arr2.classList.add('animated','rubberBand');
+    setTimeout(function() {arr1.lastChild.classList.add('match')},350);
+    setTimeout(function() {arr2.lastChild.classList.add('match')},350);
+    // arr1.classList.remove('flip');
+    // arr2.classList.remove('flip');
+    // setTimeout(function() {arr1.lastChild.classList.add('animated','rubberBand')},350);
+    // setTimeout(function() {arr2.lastChild.classList.add('animated','rubberBand')},350);
+
+    // setTimeout(function() {arr1.classList.remove('flip')},350);
+    // setTimeout(function() {arr2.classList.remove('flip')},350);
+    // arr1.lastChild.classList.add('animated','rubberBand');
+    // arr2.lastChild.classList.add('animated','rubberBand');
 
   }
   else{
-    setTimeout(function() {arr1.classList.remove('open','show')},1200);
-    setTimeout(function() {arr1.classList.add('animated','wobble')},500);
-    setTimeout(function() {arr1.classList.remove('animated','wobble')},1200);
-    // setTimeout(function() {arr1.classList.add('transform')},1000);
-    setTimeout(function() {arr2.classList.remove('open','show')},1200);
-    setTimeout(function() {arr2.classList.add('animated','wobble')},500);
-    setTimeout(function() {arr2.classList.remove('animated','wobble')},1200);
-    // setTimeout(function() {arr2.classList.add('transform')},1000);
+    setTimeout(function() {arr1.lastChild.classList.add('wrong')},500);
+    setTimeout(function() {arr2.lastChild.classList.add('wrong')},500);
+    setTimeout(function() {arr1.lastChild.classList.remove('wrong')},1300);
+    setTimeout(function() {arr2.lastChild.classList.remove('wrong')},1300);
+    setTimeout(function() {arr1.classList.toggle('flip')},1000);
+    setTimeout(function() {arr2.classList.toggle('flip')},1000);
   }
   matches = [];
 }
@@ -121,6 +127,7 @@ function setTimer() {
       time = Date.now() - start;
     },1000);
   }
+
 }
 
 // converts final time from seconds to a timer format
@@ -130,6 +137,10 @@ function finalTime(totalSecs) {
   totalSecs %= 3600;
   let min = Math.floor(totalSecs/60);
   let secs = totalSecs % 60;
+
+  min = String(min).padStart(2, "0");
+  hours = String(hours).padStart(2, "0");
+  secs = String(secs).padStart(2, "0");
   return `${hours}:${min}:${secs}`;
 }
 
@@ -142,10 +153,10 @@ function moveUp() {
   if (parseFloat(moves.innerHTML) > 30) {
     document.getElementById('third').innerHTML = '<i class="far fa-star"></i>';
   }
-  else if(parseFloat(moves.innerHTML) > 60) {
+  if(parseFloat(moves.innerHTML) > 40) {
     document.getElementById('second').innerHTML = '<i class="far fa-star"></i>';
   }
-  else if(parseFloat(moves.innerHTML) > 80) {
+  if(parseFloat(moves.innerHTML) > 50) {
     document.getElementById('first').innerHTML = '<i class="far fa-star"></i>';
   }
 }
@@ -158,16 +169,14 @@ function win(){
   let second = document.getElementById('second').innerHTML;
   let third = document.getElementById('third').innerHTML;
   document.getElementById('modal-content').innerHTML =
-    `<p><strong>You win!</strong></p>
-    <p> Star rating: ${first}${second}${third}</p>
-    <p> Score: ${parseFloat(document.getElementById('moves').innerHTML)+1}</p>
-    <p> Time: ${final}</p>
-    <button id="tryAgain">Try Again?</button>`;
+    `<p><strong>you win!</strong></p>
+    <p> star rating: ${first}${second}${third}</p>
+    <p> score: ${parseFloat(document.getElementById('moves').innerHTML)+1}</p>
+    <p> time: ${final}</p>`;
+    // <button id="tryAgain">try again?</button>`;
 
-  document.getElementById('tryAgain').addEventListener('click',  (event) => {
-    event.preventDefault();
-    document.location.reload(true);});
+  // document.getElementById('tryAgain').addEventListener('click',  () => {
+  //   window.location.href = window.location.href;});
 
   modal.style.display = "block";
-  // setTimeout(alert(`You win!!\nYour score is: ${document.getElementById('moves').innerHTML}`),4000);
 }
