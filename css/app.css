@@ -17,8 +17,10 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/papyrus.png'); /* Background pattern from Subtle Patterns */
+    background: #FCE2DE;
     font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    padding-top: 1%;
 }
 
 .container {
@@ -31,9 +33,11 @@ body {
 h1 {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    font-size: 3.5vw;
-    margin-block-start: 0.5em;
-    margin-block-end: 0.5em;
+    font-size: 3.5em;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    font-weight: 900;
+    color: #2F2C23;
 }
 
 /*
@@ -41,24 +45,24 @@ h1 {
  */
 
 .deck {
-    width: 660px;
-    min-height: 680px;
-    /* background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%); */
-    background: #EDEDED;
+    width: 650px;
+    min-height: 650px;
+    background: #E8E7E6;
     padding: 32px;
     border-radius: 10px;
-    box-shadow: 10px 10px 0 0 rgba(46, 61, 73, 0.25);
+    box-shadow: 10px 10px 0 0 rgba(46, 61, 73, 0.20);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     margin: 0 0 3em;
+    perspective: 1000px;
 }
 
 .deck .card{
     height: 125px;
     width: 125px;
-    background: #80797A;
+
     font-size: 0;
     color: #ffffff;
     border-radius: 8px;
@@ -66,23 +70,61 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5); */
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
+
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+}
+
+.card .back.match {
+    background: #21C197;
+    font-size: 33px;
     backface-visibility: hidden;
-
-}
-.deck .card.open {
-    background: #E19490;
-    cursor: default;
+    pointer-events: none;
 }
 
-.deck .card.show {
-    font-size: 33px;
+.card .back.wrong {
+  cursor: default;
+  background: #F4766F;
 }
 
-.deck .card.match {
-    cursor: default;
-    background: #02ccba;
-    font-size: 33px;
+
+/*
+ * Card flipping styles
+ */
+
+.front, .back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card .front {
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  backface-visibility: hidden;
+  position: absolute;
+  cursor: pointer;
+  background: #FBFBFB;
+}
+
+.card .back {
+  background-color: #607EEB;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  backface-visibility: hidden;
+  position: absolute;
+  cursor: default;
+  transform: rotateY(180deg);
+
+  font-size: 33px;
+}
+
+.deck .card.flip {
+  transform: rotateY(180deg);
 }
 
 /*
@@ -90,10 +132,10 @@ h1 {
  */
 
 .score-panel {
-    width: 600px;
+    width: 1100px;
     margin-bottom: 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .score-panel .stars {
@@ -140,17 +182,38 @@ h1 {
   margin: auto;
   padding: 20px;
   border-radius: 8px;
-  width: 80%;
-  font-family: 'Open Sans', sans-serif;
+  width: 50%;
+  font-family: 'Roboto', sans-serif;
   text-align: center;
   font-size: 2vw;
+  font-weight: 400;
+}
+
+/* button {
+  width: 20%;
+  padding: 10px;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 5px;
+  font-size: 1.5vw;
+  margin-bottom: 10%;
+  background-color: #607EEB;
+  border: none;
+  color: white;
 }
 
 #tryAgain:hover {
   cursor: pointer;
-  background-color: #02b3e4;
   color: white;
+  background-color: #607EEB;
+  font-weight: 500;
   border-radius: 5px;
-  width: 20%;
+  font-family: 'Roboto', sans-serif;
   text-align: center;
+  font-size: 1.5vw;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
+} */
+
+.score-panel {
+  color: #2F2C23;
+
 }
