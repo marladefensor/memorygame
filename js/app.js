@@ -173,10 +173,10 @@ function win(){
     <p> star rating: ${first}${second}${third}</p>
     <p> score: ${parseFloat(document.getElementById('moves').innerHTML)+1}</p>
     <p> time: ${final}</p>`;
-    // <button id="tryAgain">try again?</button>`;
+    <button id="tryAgain">try again?</button>`;
 
-  // document.getElementById('tryAgain').addEventListener('click',  () => {
-  //   window.location.href = window.location.href;});
+  document.getElementById('tryAgain').addEventListener('click',  () => {
+    window.location.href = window.location.href;});
 
   modal.style.display = "block";
 }
