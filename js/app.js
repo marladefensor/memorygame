@@ -172,7 +172,7 @@ function win(){
     `<p><strong>you win!</strong></p>
     <p> star rating: ${first}${second}${third}</p>
     <p> score: ${parseFloat(document.getElementById('moves').innerHTML)+1}</p>
-    <p> time: ${final}</p>`;
+    <p> time: ${final}</p>;
     <button id="tryAgain">try again?</button>`;
 
   document.getElementById('tryAgain').addEventListener('click',  () => {
