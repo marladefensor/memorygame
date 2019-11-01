@@ -189,7 +189,7 @@ h1 {
   font-weight: 400;
 }
 
-/* button {
+button {
   width: 20%;
   padding: 10px;
   font-family: 'Roboto', sans-serif;
@@ -211,7 +211,7 @@ h1 {
   text-align: center;
   font-size: 1.5vw;
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
-} */
+}
 
 .score-panel {
   color: #2F2C23;
